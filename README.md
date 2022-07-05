@@ -6,5 +6,6 @@
 5. Run 'student.py' via VSCode's built in tools or in the terminal with ```python3 student.py```. Answer the prompts which will create a '.dat' file.
 6. Move the '\<your-github-username\>.dat' file to the students folder.
 7. ```add``` and ```commit``` the file using VSCode's build-in tools or via the terminal with ```git add . && git commit -m "\<your-commit-message\>"
-8. Open a Pull Request on GitHub.
+8. ```push``` your code to GitHub via the built-in tools or terminal with ```git push```
+9. Open a Pull Request on GitHub.
 
