@@ -33,8 +33,9 @@ gh = input("What is your GitHub username (capitalization matters)?\n")
 stuff = f"{last}, {first}"
 if real:
 	stuff += f" ({real})"
-stuff += f" - P{period}"
+stuff += f", {period}"
 #load Simonsen's public key
+print(f"Encoding {stuff} into {gh}.dat")
 with open("Simonsen_public.pen", 'rb') as f:
 	key = rsa.PublicKey.load_pkcs1(f.read())
 crypt = rsa.encrypt(stuff.encode('ascii'), key)
