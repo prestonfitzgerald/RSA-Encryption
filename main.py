@@ -5,8 +5,6 @@ except:
 	print("RSA module neede -- installing")
 	os.system("pip install rsa")
 	import rsa
-finally:
-	print("complete")
 
 def generate_keys():
 	public, private = rsa.newkeys(1024)
@@ -16,9 +14,9 @@ def generate_keys():
 		f.write(private.save_pkcs1('PEM'))
 	
 def load_keys():
-	with open("public.pen", 'rb') as f:
+	with open("Simonsen_public.pen", 'rb') as f:
 		public = rsa.PublicKey.load_pkcs1(f.read())
-	with open("private.pen", 'rb') as f:
+	with open("Simonsen_private.pen", 'rb') as f:
 		private = rsa.PrivateKey.load_pkcs1(f.read())
 	return public, private
 
@@ -40,12 +38,8 @@ def verify_sha1(msg, sign, key):
 	except:
 		return False
 
-generate_keys()
 public, private = load_keys()
-message = input("Enter a message: ")
-ciphertext = encrypt(message, public)
-signature = sign_sha1(message, private)
+with open("mrsimonsen.dat", 'rb') as f:
+	msg = f.read()
+print(decrypt(msg, private))
 
-print(ciphertext)
-print("-"*10)
-print(signature)
