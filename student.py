@@ -45,7 +45,7 @@ data = f"{last},{first},{pref},{period}"
 #encrypt text
 code = rsa.encrypt(data.encode('ascii'), public)
 #save encryption to file
-with open(f"{github}.txt",'w') as f:
+with open(f"22-23/{github}.txt",'w') as f:
 	f.write(code)
 
 print("encrypted file created")

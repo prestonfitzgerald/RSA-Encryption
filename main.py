@@ -1,51 +1,56 @@
 import os
-try:
-	import rsa
-except:
-	print("RSA module neede -- installing")
-	os.system("pip install rsa")
-	import rsa
-finally:
-	print("complete")
+import rsa
+
+class Student():
+	def __init__(self, last, first, pref, period, github):
+		self.last = last
+		self.first = first
+		self.pref = pref
+		self.period = period
+		self.github = github
 
 def generate_keys():
-	public, private = rsa.newkeys(1024)
-	with open("public.pen", 'wb') as f:
-		f.write(public.save_pkcs1('PEM'))
-	with open("private.pen", 'wb') as f:
-		f.write(private.save_pkcs1('PEM'))
-	
-def load_keys():
-	with open("public.pen", 'rb') as f:
-		public = rsa.PublicKey.load_pkcs1(f.read())
-	with open("private.pen", 'rb') as f:
-		private = rsa.PrivateKey.load_pkcs1(f.read())
-	return public, private
+	print("WARNING\n\tExisting messages will be unextractable with new keys.")
+			if input("").lower() in ('y','yes'):
+				public, private = rsa.newkeys(1024)
+				with open("public.pen", 'wb') as f:
+					f.write(public.save_pkcs1('PEM'))
+				with open("private.pen", 'wb') as f:
+					f.write(private.save_pkcs1('PEM'))
+				print("New public and private keys have been generated.")
 
-def encrypt(msg, key):
-	return rsa.encrypt(msg.encode('ascii'), key)
+def extract():
+	if os.path.exists("private.pen"):
+		with open("private.pen", 'rb') as f:
+			private = rsa.PrivateKey.load_pkcs1(f.read())
+	else:
+		print('Could not locate 'private.pen' file")
 
-def decrypt(msg, key):
-	try:
-		return rsa.decrypt(msg, key).decode('ascii')
-	except:
-		return False
+	#create a list of files that have the extension .txt
+	#for each encoded .txt file
+	decoded = rsa.decrypt(msg, private).decode('ascii')
+	data = decoded.split(',')
 
-def sign_sha1(msg, key):
-	return rsa.sign(msg.encode('ascii'), key, 'SHA-1')
+def main():
+	print(
+'''
+\tMENU
+1 - Extract usernames
+2 - Generate Keys
+0 - Quit
+''')
+	op = -1
+	while op not in range(3):
+		try:
+			op = int(input("What's your choice?\n"))
+		except ValueError:
+			print("That wasn't a number.")
+	if op == 1:
+		#extract username
+		extract()
+	elif op == 2:
+		#generate keys
+		generate_keys()
 
-def verify_sha1(msg, sign, key):
-	try:
-		return rsa.verify(msg.encode('ascii'), sign, key) == 'SHA-1'
-	except:
-		return False
-
-generate_keys()
-public, private = load_keys()
-message = input("Enter a message: ")
-ciphertext = encrypt(message, public)
-signature = sign_sha1(message, private)
-
-print(ciphertext)
-print("-"*10)
-print(signature)
+if __name__ == "__main__":
+	main()
