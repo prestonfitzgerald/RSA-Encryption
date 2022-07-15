@@ -1,1 +1,1 @@
-# Move your .dat file to this folder
+# Collection of encrypted student files.

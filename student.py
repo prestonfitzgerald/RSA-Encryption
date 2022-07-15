@@ -13,7 +13,7 @@ if os.path.exists("public.pen"):
 	with open("public.pen", 'rb') as f:
 		public = rsa.PublicKey.load_pkcs1(f.read())
 else:
-	sys.exit('Could not find "public.pen"')
+	sys.exit('Inform Mr. Simonsen that the program could\'t find "public.pen"')
 
 #prompt for relevant information
 last = input("What is your last name?\n").title()
@@ -45,7 +45,7 @@ data = f"{last},{first},{pref},{period}"
 #encrypt text
 code = rsa.encrypt(data.encode('ascii'), public)
 #save encryption to file
-with open(f"22-23/{github}.txt",'w') as f:
+with open(f"students/{github}.dat",'wb') as f:
 	f.write(code)
 
 print("encrypted file created")
