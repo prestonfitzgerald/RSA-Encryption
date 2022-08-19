@@ -2,21 +2,14 @@ import os, rsa, shelve
 
 class Student():
 	def __init__(self, data, github):
-		self.last = data[0]
-		self.first_weber = data[1]
-		self.first_nuames = data[2]
 		self.period = data[3]
 		self.weber = data[4]
 		self.github = github
-		
+		self.name = f"{data[0]}, {data[1]}"
+		if data[2]:
+			self.name += f" ({data[2]})"		
 	def __str__(self):
-		rep = f"{self.last}, "
-		if self.pref:
-			rep += f"{self.first_nuames} ({self.first_weber}), "
-		else:
-			rep += f"{self.first_weber}, "
-		rep += f"\n{self.github}, P{self.period}\n"
-		rep += f"Weber: {self.weber}"
+		rep = f"{self.name}, {self.github}, P{self.period}, {self.weber}"
 		return rep
 
 def generate_keys():
@@ -67,7 +60,7 @@ def imports():
 		out = ""
 		with shelve.open('students.dat') as data:
 			for e in data:
-				out += f"{data[4]}, "
+				out += f"{data[e].weber}, "
 		with open('import.txt','w') as f:
 			f.write(out)
 		print("import.txt created")
