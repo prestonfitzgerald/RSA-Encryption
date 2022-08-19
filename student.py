@@ -16,10 +16,10 @@ else:
 	sys.exit('Inform Mr. Simonsen that the program could\'t find "public.pen"')
 
 #prompt for relevant information
-last = input("What is your last name?\n").title()
-first = input("What is your legal first name?\n").title()
-if input("Do you have a name that you prefer to go by?(Y/n)\n").lower() in("yes","y"):
-	pref = input("What is your preferred name?\n").title()
+last = input("What is your last name as shown in Weber State's records?\n").title()
+first = input("What is your first name as shown in Weber State's records?\n").title()
+if input("Does your first name in Weber State's records match the first name in NUAMES's records?(Y/n)\n").lower() in("no","n"):
+	pref = input("What is your first name in NUAMES's records?\n").title()
 else:
 	pref = ''
 valid = False
