@@ -17,9 +17,9 @@ else:
 
 #prompt for relevant information
 last = input("What is your last name as shown in Weber State's records?\n").title()
-first = input("What is your first name as shown in Weber State's records?\n").title()
+first_weber = input("What is your first name as shown in Weber State's records?\n").title()
 if input("Does your first name in Weber State's records match the first name in NUAMES's records?(Y/n)\n").lower() in("no","n"):
-	pref = input("What is your first name in NUAMES's records?\n").title()
+	first_nuames = input("What is your first name in NUAMES's records?\n").title()
 else:
 	pref = ''
 confirm = False
@@ -49,7 +49,7 @@ while not confirm:
 		confirm = True
 
 #format text
-data = f"{last},{first},{pref},{period},{weber}"
+data = f"{last},{first_weber},{first_nuames},{period},{weber}"
 #encrypt text
 code = rsa.encrypt(data.encode('ascii'), public)
 #save encryption to file
