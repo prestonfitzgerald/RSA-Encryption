@@ -68,7 +68,7 @@ def main():
 0 - Quit
 ''')
 	op = -1
-	while op not in range(3):
+	while op not in range(4):
 		try:
 			op = int(input("What's your choice?\n"))
 		except ValueError:
