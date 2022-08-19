@@ -1,6 +1,4 @@
-import os
-import rsa
-import shelve
+import os, rsa, shelve
 
 class Student():
 	def __init__(self, data, github):
@@ -37,6 +35,7 @@ def extract():
 			private = rsa.PrivateKey.load_pkcs1(f.read())
 	else:
 		print("Could not locate 'private.pen' file")
+		return
 	students = {}
 	os.chdir('students')
 	#create a list of files that have the extension .txt
@@ -49,17 +48,31 @@ def extract():
 		github = f.replace('.dat','')
 		students[github] = Student(data, github)
 	os.chdir('..')
-	f = shelve.open('students.dat')
-	for name in students.keys():
-		print(type(students[name]))
-		f[name] = students[name]
-	f.close()
+	with shelve.open('students.dat') as f:
+		for name in students.keys():
+			print(type(students[name]))
+			f[name] = students[name]
+	print("students.dat created")
 
 def check():
-	data = shelve.open('students.dat')
-	for e in data:
-		print(data[e])
-	data.close()
+	if os.path.exists('students.dat'):
+		with shelve.open('students.dat') as data:
+			for e in data:
+				print(data[e])
+	else:
+		print("students.dat does not exist!")
+
+def imports():
+	if os.path.exists('students.dat'):
+		out = ""
+		with shelve.open('students.dat') as data:
+			for e in data:
+				out += f"{data[4]}, "
+		with open('import.txt','w') as f:
+			f.write(out)
+		print("import.txt created")
+	else:
+		print("students.dat does not exist!")
 
 def main():
 	print(
@@ -67,11 +80,12 @@ def main():
 \tMENU
 1 - Extract data
 2 - Check database
-3 - Generate Keys
+3 - Create canvas import file
+4 - Generate Keys
 0 - Quit
 ''')
 	op = -1
-	while op not in range(4):
+	while op not in range(5):
 		try:
 			op = int(input("What's your choice?\n"))
 		except ValueError:
@@ -82,6 +96,8 @@ def main():
 	elif op == 2:
 		check()
 	elif op == 3:
+		imports()
+	elif op == 4:
 		#generate keys
 		generate_keys()
 
