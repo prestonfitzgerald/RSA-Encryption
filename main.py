@@ -5,17 +5,20 @@ import shelve
 class Student():
 	def __init__(self, data, github):
 		self.last = data[0]
-		self.first = data[1]
-		self.pref = data[2]
+		self.first_weber = data[1]
+		self.first_nuames = data[2]
 		self.period = data[3]
+		self.weber = data[4]
 		self.github = github
+		
 	def __str__(self):
 		rep = f"{self.last}, "
 		if self.pref:
-			rep += f"{self.pref} ({self.first}), "
+			rep += f"{self.first_nuames} ({self.first_weber}), "
 		else:
-			rep += f"{self.first}, "
-		rep += f"{self.github}, P{self.period}"
+			rep += f"{self.first_weber}, "
+		rep += f"\n{self.github}, P{self.period}\n"
+		rep += f"Weber: {self.weber}"
 		return rep
 
 def generate_keys():

@@ -22,6 +22,14 @@ if input("Does your first name in Weber State's records match the first name in 
 	pref = input("What is your first name in NUAMES's records?\n").title()
 else:
 	pref = ''
+confirm = False
+while not confirm:
+	weber = input("Enter you Weber State username (what comes before '@mail.weber.edu')\n").lower()
+	print("Double check that your username has been entered correctly.")
+	print(weber)
+	if input("Is you Weber State username entered correctly?(Y/n)\n").lower() in ('y','yes'):
+		confirm = True
+
 valid = False
 while not valid:
 	try:
@@ -37,11 +45,11 @@ while not confirm:
 	github = input("What's your GitHub username?\n")
 	print("Double check that your username has been entered correctly.")
 	print(github)
-	if input("Is you username entered correctly?(Y/n)\n").lower() in ('y','yes'):
+	if input("Is you GitHub username entered correctly?(Y/n)\n").lower() in ('y','yes'):
 		confirm = True
 
 #format text
-data = f"{last},{first},{pref},{period}"
+data = f"{last},{first},{pref},{period},{weber}"
 #encrypt text
 code = rsa.encrypt(data.encode('ascii'), public)
 #save encryption to file
